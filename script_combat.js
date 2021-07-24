@@ -1,3 +1,5 @@
+const selectedMonster = sessionStorage.getItem("playerMonster");
+
 const monsterHealthBar = document.getElementById('monster-health');
 const playerHealthBar = document.getElementById('player-health');
 
@@ -38,22 +40,6 @@ function resetGame(monsterValue, enemyValue) {
 
 function setPlayerHealth(health) {
   playerHealthBar.value = health;
-}
-
-//monster stats
-let monster1 = {
-    "initialHP": 100,
-    "HP": 100,
-    "attackValue": 15,
-    "strongAttackValue": 20
-}
-
-let monster2 = {
-
-}
-
-let monster3 = {
-
 }
 
 //enemies stats

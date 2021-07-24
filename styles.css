@@ -51,12 +51,19 @@ header .title h4{
     height: 8rem;
     width: auto;
     margin-left: 25%;
+    cursor: pointer;
+    padding: 15px;
+}
+
+.active {
+    border: 2px solid black;
 }
 
 .monster-name {
     text-align: center;
     padding-top: 1rem;
     padding-bottom: 0.5rem;
+    cursor: pointer;
 }
 
 .choose-monster {
