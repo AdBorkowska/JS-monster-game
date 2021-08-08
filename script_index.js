@@ -2,6 +2,8 @@
 let selectedMonster;
 
 let monster1 = {
+    "name": "Chimera",
+    "img": "monster1",
     "initialHP": 120,
     "HP": 120,
     "attackValue": 25,
@@ -10,6 +12,8 @@ let monster1 = {
 }
 
 let monster2 = {
+    "name": "Basilisk",
+    "img": "monster2",
     "initialHP": 140,
     "HP": 140,
     "attackValue": 20,
@@ -18,6 +22,8 @@ let monster2 = {
 }
 
 let monster3 = {
+    "name": "Griffin",
+    "img": "monster3",
     "initialHP": 100,
     "HP": 100,
     "attackValue": 15,
@@ -74,18 +80,21 @@ function storeSelection() {
             switch (radios[i].value) {
                 case "monster1":
                     selectedMonster = monster1;
-                    sessionStorage.setItem("playerMonster", JSON.stringify(selectedMonster))
+                    sessionStorage.setItem("selectedMonster", JSON.stringify(selectedMonster))
                     console.log(selectedMonster)
+                    window.location.href = "./combat.html";
                 break;
                 case "monster2":
                     selectedMonster = monster2;
-                    sessionStorage.setItem("playerMonster", JSON.stringify(selectedMonster))
+                    sessionStorage.setItem("selectedMonster", JSON.stringify(selectedMonster))
                     console.log(selectedMonster)
+                    window.location.href = "./combat.html";
                 break;
                 case "monster3":
                     selectedMonster = monster3;
-                    sessionStorage.setItem("playerMonster", JSON.stringify(selectedMonster))
+                    sessionStorage.setItem("selectedMonster", JSON.stringify(selectedMonster))
                     console.log(selectedMonster)
+                    window.location.href = "./combat.html";
                 break;
             }
         }

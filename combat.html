@@ -9,35 +9,40 @@
 </head>
 <body>
     <header>
-
+        <div class="title"> <h1><span id="player-header"></span> vs. <span>Keeper of souls</span></h1></div>
     </header>
     <main>
         <div class="container">
             <div class="combat-screen">
                 <div class="monsters-info">
-                <div class="player-monster">
-                    <div class="monster-pic"></div>
-                    <div id="monster-name" class="monster-name"></div>
-                    <div class="monster-hp"></div>
+                <div class="info">
+                    <div class="monster-pic-combat" id="player-pic"></div>
+                    <div id="player-monster-name" class="monster-name-combat"></div>
+                    <div class="monster-hp">
+                        <progress id="player-health" max="140" value="140">100%</progress>
+                    </div>
                 </div>
-                <div class="enemy-monster">
-                    <div class="monster-pic"></div>
-                    <div id="enemy-monster-name" class="monster-name"></div>
-                    <div class="monster-hp"></div>
+                <div class="log"></div>
+                <div class="info">
+                    <div class="monster-pic-combat" id="enemy-pic"></div>
+                    <div id="enemy-monster-name" class="monster-name-combat">Keeper of souls</div>
+                    <div class="monster-hp">
+                        <progress id="enemy-health" max="140" value="140">100%</progress>
+                    </div>
                 </div>
                 </div>
-                <div class="menu">
+                <div class="menu" id="during-battle">
                     <button id="quickAttack">Quick attack</button>
                     <button id="strongAttack">Strong attack</button>
                     <button id="potion">Potion</button>
                 </div>
             </div>
-            <div class="after-battle-won">
-                <button id="back">Main screen</button>
+            <div id="after-battle-won" class="menu after">
+                <button id="back-win">Main screen</button>
                 <button id="next">Next opponent</button>
             </div>
-            <div class="after-battle-fail">
-                <button id="back">Main screen</button>
+            <div id="after-battle-fail" class="menu after">
+                <button id="back-fail">Main screen</button>
                 <button id="reset">Try again</button>
             </div>
         </div>
