@@ -5,11 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles.css">
-    <title>Document</title>
+    <title>Combat screen | Curse of the necromancer - a JavaScript game</title>
 </head>
 <body>
     <header>
-        <div class="title"> <h1><span id="player-header"></span> vs. <span>Keeper of souls</span></h1></div>
+        <div class="title"> <h1><span id="player-header"></span> vs. <span id="enemy-name">Keeper of souls</span></h1></div>
     </header>
     <main>
         <div class="container">
@@ -19,14 +19,20 @@
                     <div class="monster-pic-combat" id="player-pic"></div>
                     <div id="player-monster-name" class="monster-name-combat"></div>
                     <div class="monster-hp">
+                        <div id="show-HP">
+                            <span id="current-player-HP"></span> / <span id="max-player-HP"></span>
+                        </div>
                         <progress id="player-health" max="140" value="140">100%</progress>
                     </div>
                 </div>
-                <div class="log"></div>
+                <div id="log" class="log"></div>
                 <div class="info">
                     <div class="monster-pic-combat" id="enemy-pic"></div>
                     <div id="enemy-monster-name" class="monster-name-combat">Keeper of souls</div>
                     <div class="monster-hp">
+                        <div class="show-HP">
+                            <span id="current-enemy-HP"></span> / <span id="max-enemy-HP"></span>
+                        </div>
                         <progress id="enemy-health" max="140" value="140">100%</progress>
                     </div>
                 </div>

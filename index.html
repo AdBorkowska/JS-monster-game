@@ -5,68 +5,65 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles.css">
-    <title>Document</title>
+    <title>Curse of the necromancer - a JavaScript game</title>
 </head>
 <body>
     <header>
         <div class="title">
-            <h1>Tytuł</h1>
-            <h4>Podtytuł</h4>
+            <h1>Curse of the necromancer</h1>
+            <h4>a JavaScript game</h4>
         </div>
     </header>
     <main>
         <div class="container">
             <div class="text">
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Explicabo quidem aut beatae ullam? Amet quo fugiat dolorem, accusamus culpa, numquam corrupti incidunt deserunt impedit modi sunt pariatur illo, vero doloribus.
-                Possimus rem qui ducimus voluptatem cum eveniet repudiandae cupiditate voluptatibus aut molestiae, quis totam at. Ipsa quas sed accusamus, pariatur, quod impedit dolorum iure sapiente consequuntur aliquid repellat facere aperiam.
-                vero obcaecati aut ex perferendis sunt accusantium placeat blanditiis inventore accusamus! Non libero enim alias incidunt, velit architecto ipsum.</p>
+                <p>Are you ready to face most foul creatures sent by an evil necromancer? Please choose one of the beasts below so they can aid you on your journey. Each one of them is different, so choose wisely! Good luck.</p>
             </div>
             <form>
                 <div class="monsters">
                     <div class="monster1">
                         <div class="monster-pic">
-                            <img src="./monster1.png" alt="" id="img1">
+                            <img src="./monster1.png" alt="" name="image" id="img1">
                         </div>
                         <div class="monster-name-header monster-name"><h3>Chimera</h3></div>
                         <div class="monster-text"><p>Slow but deadly, chimeras are considered one of the most dangerous monsters. Their attacks are powerful, but they are less likely to dodge incoming attacks.</p></div>
                         <div class="choose-monster">
-                            <label for="monster1" class="monster-name text-choose">Choose chimera</label>
+                            <label for="monster1" class="monster-name text-choose" id="monster-name1">Choose chimera</label>
                             <input type="radio" name="chosenMonster" id="monster1" value="monster1">   
                         </div>
-
                     </div>
                     <div class="monster2">
                         <div class="monster-pic">
-                            <img src="./monster2.png" alt="" id="img2">
+                            <img src="./monster2.png" alt="" name="image" id="img2">
                         </div>
                         <div class="monster-name-header monster-name"><h3>Basilisk</h3></div>
-                        <div class="monster-text">Hatched by a cockerel from the egg of a serpent, basilisk are known for their lethal gaze. They are very resilient, but have medium attack strength and chance to dodge.</div>
+                        <div class="monster-text">Hatched by a cockerel from the egg of a serpent, basilisks are known for their lethal gaze. They are very resilient, but have medium attack strength and chance to dodge.</div>
                         <div class="choose-monster">
-                            <label for="monster2" class="monster-name text-choose">Choose basilisk</label>
+                            <label for="monster2" class="monster-name text-choose" id="monster-name2">Choose basilisk</label>
                             <input type="radio" name="chosenMonster" id="monster2" value="monster2">
                         </div>
                     </div>
                     <div class="monster3">
                         <div class="monster-pic">
-                            <img src="./monster3.png" alt="" id="img3">
+                            <img src="./monster3.png" alt="" name="image" id="img3">
                         </div>
                         <div class="monster-name-header monster-name"><h3>Griffin</h3></div>
                         <div class="monster-text">Proud rulers of the skies, known for guarding treasures and priceless possessions. They are very good at avoiding enemy's attacks, but not as strong as other monsters.</div>
                         <div class="choose-monster">
-                            <label for="monster3" class="monster-name text-choose">Choose griffin</label>
+                            <label for="monster3" class="monster-name text-choose" id="monster-name3">Choose griffin</label>
                             <input type="radio" name="chosenMonster" id="monster3" value="monster3">
                         </div>
                     </div>
                 </div>
                 <div class="button">
-                    <button type="button" id="start">Start</button>
+                    <button type="button" id="start" type="submit">Start</button>
                 </div>
             </form>
-        </div>
     </main>
     <footer>
         <p>Adriana Borkowska 2021</p>
     </footer>
+</div>
     <script src="script_index.js"></script>
 </body>
 </html>

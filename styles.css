@@ -1,4 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP&display=swap');
+
+
+
 
 * {
     box-sizing: border-box;
@@ -12,11 +16,13 @@ body {
     overflow: hidden;
     background-image: url("./bg.jpg");
     background-size: cover;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 0.9rem;
 }
 
 header {
     margin: 0 auto;
-    margin-top: 2rem;
+    margin-top: 1.5rem;
     font-size: 2rem;
 }
 
@@ -29,6 +35,10 @@ header .title h4{
     padding-top: 1rem;
 }
 
+.text {
+    text-align: center;
+    padding-bottom: 15px;
+}
 .container {
     margin: 0 auto;
     width: 75%;
@@ -60,7 +70,8 @@ header .title h4{
 }
 
 .active {
-    border: 2px solid black;
+    border: 2px solid yellow;
+    box-shadow: rgb(250, 220, 87) 0px 0px 6px 2px;
 }
 
 .monster-name {
@@ -87,6 +98,10 @@ header .title h4{
     font-weight: 700;
 }
 
+.monster-chosen {
+    font-weight: 700;
+}
+
 .button {
     width: 100%;
     margin-top: 2rem;
@@ -99,7 +114,9 @@ button {
     width: 6rem;
     cursor: pointer;
     font-size: 1.1rem;
-    color: rgb(117, 20, 20);
+    font-style: italic;
+    font-weight: 700;
+    color: rgb(82, 15, 15);
     background: linear-gradient(0deg, rgba(255,237,154,1) 0%, rgba(252,246,207,1) 100%);
     box-shadow: rgb(250, 220, 87) 0px 0px 6px 2px;
     border: none;
@@ -107,9 +124,14 @@ button {
 
 button:hover {
     background: linear-gradient(0deg, rgba(255,205,54,1) 0%, rgba(255,244,195,1) 76%);
+    box-shadow: rgb(240, 208, 66) 0px 0px 6px 2px;
 }
 
 footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2rem;
     margin-left: 2rem;
     font-style: italic;
 }
@@ -125,6 +147,7 @@ footer {
 
 .monsters-info {
     display: flex;
+    flex-direction: row;
     justify-content: space-around;
     margin-bottom: 3rem;
 }
@@ -192,4 +215,105 @@ progress[value]::-moz-progress-bar {
 
 .after {
     display: none;
+}
+
+.log {
+    height: 300px;
+    width: 600px;
+    text-align: center;
+    overflow-y: auto;
+}
+
+.final-message {
+    display: flex;
+    flex-direction: column;
+    margin: 20px auto;
+    text-align: center;
+    padding: 10px;
+}
+
+.win-img img {
+    width: 200px;
+    height: auto;
+}
+
+@media screen and (max-width: 420px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        overflow: scroll;
+    }
+    .text {
+        margin-top: 0.5rem;
+    }
+    .monsters {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 auto;
+        width: 80vw;
+    }
+    .monsters > div {
+        width: 80vw;
+        margin-left: -5%;
+    }
+    .button {
+        margin: 2px 0 10px;
+    }
+    .monsters-info{
+        /*display: grid*/
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 auto;
+        height: auto;
+    }
+    .log {
+        height: 6rem;
+        overflow: scroll;
+        order: 3;
+    }
+}
+
+@media screen and (min-width: 421px) and (max-width: 736px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+        overflow: scroll;
+    }
+    .text {
+        margin-top: 0.5rem;
+    }
+
+    .monsters {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        margin: 0 auto;
+        width: 80vw;
+    }
+    .monsters > div {
+        width: 33vw;
+        margin-left: -5%;
+    }
+
+    .button {
+        margin: 0.5rem 0 0.5rem;
+    }
+    .monsters-info{
+        /*display: grid*/
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 auto;
+        height: auto;
+    }
+    .log {
+        height: 6rem;
+        overflow: scroll;
+        order: 3;
+    }
 }

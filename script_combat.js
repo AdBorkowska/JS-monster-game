@@ -1,78 +1,71 @@
 let playerMonster = JSON.parse(sessionStorage.selectedMonster);
 console.log(playerMonster)
 
-const enemyHealthBar = document.getElementById('enemy-health');
-const playerHealthBar = document.getElementById('player-health');
+const enemyHealthBar = document.getElementById("enemy-health");
+const playerHealthBar = document.getElementById("player-health");
 
-const attackBtn = document.getElementById('quickAttack');
-const strongAttackBtn = document.getElementById('strongAttack');
-const healBtn = document.getElementById('potion');
+const attackBtn = document.getElementById("quickAttack");
+const strongAttackBtn = document.getElementById("strongAttack");
+const healBtn = document.getElementById("potion");
 
 //enemies stats
-let enemy1 = {
+const enemy1 = {
+  "name": "Keeper of souls",
   "image": "enemy1",
   "initialHP": 140,
   "HP": 140,
-  "attackValue": 25
+  "attackValue": 20,
+  "dodgeChance": 20
 }
 
-let enemy2 = {
-"image": "enemy2",
-"initialHP": 150,
-"HP": 150,
-"attackValue": 20
+const enemy2 = {
+  "name": "Necrodragon",
+  "image": "enemy2",
+  "initialHP": 150,
+  "HP": 150,
+  "attackValue": 25,
+  "dodgeChance": 20
 }
+
+//grouping enemies and displaying them in correct order 
+Array.prototype.move = function(i) {
+  this.current = this.current + i
+  return this[this.current];
+};
+
+const enemies = [enemy1, enemy2]
+enemies.current = 0;
+
+let currentEnemy = enemies[0];
 
 //setting the game: displaying chosen monster
 document.getElementById("player-header").innerHTML = `${playerMonster["name"]}`
 document.getElementById("player-pic").innerHTML = `<img src="./${playerMonster["img"]}.png">`
 document.getElementById("player-monster-name").innerHTML = `${playerMonster["name"]}`
-document.getElementById("enemy-pic").innerHTML = `<img src="./enemy1.png">`
+document.getElementById("enemy-pic").innerHTML = `<img src="./${currentEnemy["image"]}.png">`
 
 //initial health
+let currentPlayerHP = playerMonster["HP"];
+let currentEnemyHP = currentEnemy["HP"];
+
 function adjustHealthBars() {
-  enemyHealthBar.max = enemy1["initialHP"];
-  enemyHealthBar.value = enemy1["HP"];
+  enemyHealthBar.max = currentEnemy["initialHP"];
+  enemyHealthBar.value = currentEnemyHP;
   playerHealthBar.max = playerMonster["initialHP"];
-  playerHealthBar.value = playerMonster["HP"];
+  playerHealthBar.value = currentPlayerHP;
+}
+
+function adjustHPCounter(){
+  document.getElementById("current-player-HP").innerHTML = currentPlayerHP
+  document.getElementById("current-enemy-HP").innerHTML = currentEnemyHP
+  document.getElementById("max-player-HP").innerHTML = playerMonster["initialHP"];
+  document.getElementById("max-enemy-HP").innerHTML = currentEnemy["initialHP"];
 }
 
 adjustHealthBars();
-
-//reset button
-function resetGame(monsterValue, enemyValue) {
-  playerHealthBar.value = playerMonster["initialHP"];
-  enemyHealthBar.value = enemy1["initialHP"];
-}
-
-//winning conditional
-function endRound() {
-  const playerDamage = dealPlayerDamage(enemy1["attackValue"]);
-  playerMonster["HP"] -=playerDamage;
-  logBattle(logEventEnemyAttack, playerDamage);
-  printLog();
-  if (enemy1["HP"] <= 0 && playerMonster["HP"] > 0) {
-    alert("You won!")
-    showButtons();
-  }
-  else if (playerMonster["HP"] <=0 && enemy1["HP"] > 0) {
-    alert("You lost!")
-    showButtons();
-  }
-  else if(playerMonster["HP"] <=0 && enemy1["HP"] <= 0) {
-    alert("You have a draw!")
-    showButtons();
-  }
-}
+adjustHPCounter();
 
 //battle log
-
-const logEventPlayerAttack = "PLAYER_ATTACK";
-const logEventStrongAttack = "PLAYER_STRONG_ATTACK";
-const logEventEnemyAttack = "ENEMY_ATTACK";
-const logEventPlayerHeal = "PLAYER_HEAL";
-const logEventGameOver = "GAME_OVER";
-
 let battleLog = [];
 
 function logBattle(ev, val) {
@@ -80,126 +73,165 @@ function logBattle(ev, val) {
     event: ev,
     value: val,
   }
+  let message;
   switch (ev) {
-    case logEventPlayerAttack:
-      logEntry;
+    case "PlayerAttack":
+      message = `You attacked for ${logEntry.value}` + "<br />"
       break;
-    case logEventStrongAttack:
-      logEntry;
+    case "StrongAttack":
+      message = `You attacked for ${logEntry.value}` + "<br />"
       break;
-    case logEventEnemyAttack:
-      logEntry;
+    case "EnemyAttack":
+      message = `Enemy attacked for ${logEntry.value}` + "<br />"
       break;
-    case logEventPlayerHeal:
-      logEntry;
+    case "PlayerHeal":
+      message = `You healed for ${logEntry.value}, potions left: ${healNumber}` + "<br />"
       break;
-    case logEventGameOver:
-      logEntry;
+    case "PlayerDodge":
+        message = `You dodged the attack` + "<br />"
+        break;
+    case "EnemyDodge":
+      message = `Enemy dodged your attack` + "<br />"
+    break;
+    case "GameOver":
+      message = "Battle ended!"
       break;
   }
-  battleLog.push(logEntry);
+  battleLog.unshift(message);
 }
 
 function printLog() {
-  for (const i of battleLog) {
-    console.log(i)
+  document.getElementById("log").innerHTML = battleLog.join("")
+}
+
+//player & enemy attacks and dodge chance
+function playerDodgeChance(){
+  let MonsterdodgeChance = playerMonster["dodgeChance"];
+  let dodge = Math.floor(Math.random() * 100)
+  console.log(dodge)
+  console.log(MonsterdodgeChance)
+  if (MonsterdodgeChance >= dodge) {
+    logBattle("PlayerDodge");
+    endRound()
+  }
+  else{
+    enemyTurn()
   }
 }
 
+function attackEnemy(mode) {
+  let maxDamage;
+  let logEvent;
+  if(mode === "quickAttack") {
+    maxDamage = playerMonster["attackValue"];
+    logEvent = "PlayerAttack";
+  }
+  else if (mode === "strongAttack") {
+    maxDamage = playerMonster["strongAttackValue"];
+    logEvent = "StrongAttack";
+  }
+  const damage = dealEnemyDamage(maxDamage)
+  currentEnemyHP -= damage;
+  logBattle(logEvent, damage);
+  playerDodgeChance()
+}
 
-//player & enemy attacks
-function dealMonsterDamage(damage) {
-  const dealtDamage = Math.random() * damage;
+function dealEnemyDamage(damage) {
+  const dealtDamage = Math.floor(Math.random() * damage) + 1;
   enemyHealthBar.value = +enemyHealthBar.value - dealtDamage;
   return dealtDamage;
 }
 
+function enemyDodgeChance(mode) {
+  if (mode === "quickAttack") {
+    let ignoreDodge = Math.floor(Math.random() * 100)
+    if (ignoreDodge <= 50) {
+      attackEnemy(mode)
+    }
+    else {
+      calculateEnemyDodge(mode);
+    }
+  }
+  else {
+    calculateEnemyDodge(mode);
+  }
+}
+
+function calculateEnemyDodge(mode) {
+  let EnemyDodgeChance = currentEnemy["dodgeChance"];
+  let dodge = Math.floor(Math.random() * 100)
+  if (EnemyDodgeChance >= dodge) {
+    logBattle("EnemyDodge");
+    enemyTurn()
+  }
+  else{
+    attackEnemy(mode)
+  }
+}
+
+function enemyTurn() {
+  const playerDamage = dealPlayerDamage(currentEnemy["attackValue"]);
+  currentPlayerHP -=playerDamage;
+  logBattle("EnemyAttack", playerDamage);
+  endRound();
+}
+
 function dealPlayerDamage(damage) {
-  const dealtDamage = Math.random() * damage;
+  const dealtDamage = Math.floor(Math.random() * damage) + 1;
   playerHealthBar.value = +playerHealthBar.value - dealtDamage;
   return dealtDamage;
 }
 
-const modeAttack = "quickAttack"
-const modeStrongAttack = "strongAttack"
-
-function attackMonster(mode) {
-  let maxDamage;
-  let logEvent;
-  if(mode === modeAttack) {
-    maxDamage = playerMonster["attackValue"];
-    logEvent = logEventPlayerAttack;
-  }
-  else if (mode === modeStrongAttack) {
-    maxDamage = playerMonster["strongAttackValue"];
-    logEvent = logEventStrongAttack;
-  }
-  const damage = dealMonsterDamage(maxDamage)
-  enemy1["HP"] -= damage;
-  logBattle(logEvent, damage);
-  console.log(logEvent)
-  endRound();
-}
-
 attackBtn.addEventListener('click', function(){
-  attackMonster("quickAttack")
+  enemyDodgeChance("quickAttack")
 });
 
 strongAttackBtn.addEventListener("click", function(){
-  attackMonster("strongAttack")
+  enemyDodgeChance("strongAttack")
 })
-
-//dodge chance
-
 
 //potion button
 const healValue = 15;
+let healNumber = 3;
 
 function increasePlayerHealth(healValue) {
   playerHealthBar.value = +playerHealthBar.value + healValue;
-}
-
-function setPlayerHealth(health) {
-  playerHealthBar.value = health;
-  dealPlayerDamage();
+  healNumber = healNumber - 1;
 }
 
 healBtn.addEventListener("click", function(){
   let potionValue;
-  if(playerMonster["HP"] >= playerMonster["initialHP"] - healValue){
+  if(currentPlayerHP >= playerMonster["initialHP"] - healValue){
     alert("You can't heal to more than your max initial health");
-    potionValue = playerMonster["initialHP"] - playerMonster["HP"];
+    potionValue = playerMonster["initialHP"] - currentPlayerHP;
+  }
+  else if(healNumber <= 0) {
+    alert("You already used all your potions!")
   }
   else {
     potionValue = healValue;
   }
   increasePlayerHealth(potionValue);
-  playerMonster["HP"] += potionValue;
-  logBattle(logEventPlayerHeal, healValue);
-  endRound();
+  currentPlayerHP += potionValue;
+  logBattle("PlayerHeal", healValue);
+  enemyTurn()
 })
 
-//reset button
-function reset() {
-  playerMonster["HP"] = playerMonster["initialHP"]
-  enemy1["HP"] = enemy1["initialHP"]
-  resetGame(playerMonster["initialHP"], enemy1["initialHP"]);
-  document.getElementById("during-battle").classList.remove("after")
-  document.getElementById("after-battle-fail").classList.add("after")
-}
-
-//buttons after battle
-
-function showButtons() {
-  if (enemy1["HP"] <= 0 && playerMonster["HP"] > 0) {
+//winning conditional
+function endRound() {
+  adjustHPCounter();
+  printLog();
+  if (currentEnemyHP <= 0 && currentPlayerHP > 0) {
+    alert("You won!")
     document.getElementById("after-battle-won").classList.remove("after")
     document.getElementById("during-battle").classList.add("after")
   }
-  else if (playerMonster["HP"] <=0 && enemy1["HP"] > 0) {
+  else if (currentPlayerHP <=0 && currentEnemyHP > 0) {
     document.getElementById("after-battle-fail").classList.remove("after")
     document.getElementById("during-battle").classList.add("after")
   }
-  else if(playerMonster["HP"] <=0 && enemy1["HP"] <= 0) {
+  else if(currentPlayerHP <=0 && currentEnemyHP <= 0) {
+    alert("You have a draw!")
     document.getElementById("after-battle-fail").classList.remove("after")
     document.getElementById("during-battle").classList.add("after")
   }
@@ -208,7 +240,35 @@ function showButtons() {
 document.getElementById("reset").addEventListener("click", reset)
 document.getElementById("back-win").addEventListener("click", mainMenu)
 document.getElementById("back-fail").addEventListener("click", mainMenu)
+document.getElementById("next").addEventListener("click", nextEnemy)
 
 function mainMenu(){
   window.location.href = "./index.html";
+}
+
+function reset() {
+  currentPlayerHP = playerMonster["initialHP"];
+  currentEnemyHP = currentEnemy["initialHP"];
+  adjustHPCounter();
+  adjustHealthBars();
+  battleLog.length = 0;
+  healNumber = 3;
+  document.getElementById("during-battle").classList.remove("after")
+  document.getElementById("after-battle-fail").classList.add("after")
+  document.getElementById("log").innerHTML = ``;
+}
+
+function nextEnemy() {
+  if(enemies.current === enemies.length - 1) {
+    window.location.href = "./final_screen.html";
+  }
+  else{
+    reset();
+    currentEnemy = enemies.move(1)
+    document.getElementById("enemy-pic").innerHTML = `<img src="./${currentEnemy["image"]}.png">`
+    document.getElementById("enemy-name").innerHTML = currentEnemy["name"]
+    document.getElementById("enemy-monster-name").innerHTML = currentEnemy["name"]
+    document.getElementById("after-battle-won").classList.add("after")
+    console.log(currentEnemy);
+  }
 }
