@@ -16,9 +16,9 @@ const monster2 = {
     "img": "monster2",
     "initialHP": 130,
     "HP": 130,
-    "attackValue": 20,
-    "strongAttackValue": 25,
-    "dodgeChance": 50 
+    "attackValue": 17,
+    "strongAttackValue": 22,
+    "dodgeChance": 45 
 }
 
 const monster3 = {
@@ -26,8 +26,8 @@ const monster3 = {
     "img": "monster3",
     "initialHP": 110,
     "HP": 110,
-    "attackValue": 17,
-    "strongAttackValue": 22,
+    "attackValue": 20,
+    "strongAttackValue": 25,
     "dodgeChance": 60 
 }
 

@@ -10,7 +10,7 @@ const healBtn = document.getElementById("potion");
 
 //enemies stats
 const enemy1 = {
-  "name": "Keeper of souls",
+  "name": "Wraith",
   "image": "enemy1",
   "initialHP": 140,
   "HP": 140,
@@ -24,7 +24,7 @@ const enemy2 = {
   "initialHP": 150,
   "HP": 150,
   "attackValue": 25,
-  "dodgeChance": 20
+  "dodgeChance": 25
 }
 
 //grouping enemies and displaying them in correct order 
@@ -85,16 +85,22 @@ function logBattle(ev, val) {
       message = `Enemy attacked for ${logEntry.value}` + "<br />"
       break;
     case "PlayerHeal":
-      message = `You healed for ${logEntry.value}, potions left: ${healNumber}` + "<br />"
+      message = `You healed for ${logEntry.value}` + "<br />"
       break;
     case "PlayerDodge":
-        message = `You dodged the attack` + "<br />"
+        message = "You dodged the attack <br />"
         break;
     case "EnemyDodge":
-      message = `Enemy dodged your attack` + "<br />"
+      message = "Enemy dodged your attack <br />"
     break;
-    case "GameOver":
-      message = "Battle ended!"
+    case "PlayerWon":
+      message = "<b> You won!</b> <br />"
+      break;
+    case "Draw":
+      message = "<b>You have a draw!</b> <br />"
+      break;
+    case "PlayerLost":
+      message = "<b>You lost!</b> <br />"
       break;
   }
   battleLog.unshift(message);
@@ -191,12 +197,15 @@ strongAttackBtn.addEventListener("click", function(){
 })
 
 //potion button
+let healCounter = document.getElementById("potionCount")
+console.log(healCounter)
 const healValue = 15;
 let healNumber = 3;
 
 function increasePlayerHealth(healValue) {
   playerHealthBar.value = +playerHealthBar.value + healValue;
   healNumber = healNumber - 1;
+  healCounter.innerHTML = `(${healNumber})`
 }
 
 healBtn.addEventListener("click", function(){
@@ -222,16 +231,20 @@ function endRound() {
   adjustHPCounter();
   printLog();
   if (currentEnemyHP <= 0 && currentPlayerHP > 0) {
-    alert("You won!")
+    logBattle("PlayerWon")
+    printLog();
     document.getElementById("after-battle-won").classList.remove("after")
     document.getElementById("during-battle").classList.add("after")
   }
   else if (currentPlayerHP <=0 && currentEnemyHP > 0) {
+    logBattle("PlayerLost")
+    printLog();
     document.getElementById("after-battle-fail").classList.remove("after")
     document.getElementById("during-battle").classList.add("after")
   }
   else if(currentPlayerHP <=0 && currentEnemyHP <= 0) {
-    alert("You have a draw!")
+    logBattle("Draw")
+    printLog();
     document.getElementById("after-battle-fail").classList.remove("after")
     document.getElementById("during-battle").classList.add("after")
   }
@@ -253,6 +266,7 @@ function reset() {
   adjustHealthBars();
   battleLog.length = 0;
   healNumber = 3;
+  healCounter.innerHTML = `(${healNumber})`
   document.getElementById("during-battle").classList.remove("after")
   document.getElementById("after-battle-fail").classList.add("after")
   document.getElementById("log").innerHTML = ``;
@@ -263,8 +277,8 @@ function nextEnemy() {
     window.location.href = "./final_screen.html";
   }
   else{
-    reset();
     currentEnemy = enemies.move(1)
+    reset();
     document.getElementById("enemy-pic").innerHTML = `<img src="./${currentEnemy["image"]}.png">`
     document.getElementById("enemy-name").innerHTML = currentEnemy["name"]
     document.getElementById("enemy-monster-name").innerHTML = currentEnemy["name"]
@@ -272,3 +286,11 @@ function nextEnemy() {
     console.log(currentEnemy);
   }
 }
+
+//back button
+document.getElementById("back").addEventListener("click", function(){
+  let = confirmBack = confirm("Do you want to go back to main menu? You will lose all your progress!")
+  if(confirmBack){
+    window.location.href = "./index.html";
+  }
+});

@@ -1,9 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP&display=swap');
 
-
-
-
 * {
     box-sizing: border-box;
     margin: 0;
@@ -11,7 +8,7 @@
 
 body {
     display: grid;
-    grid-template-rows: 25% 70% 5%;
+    grid-template-rows: 20% 75% 5%;
     height: 100vh;
     overflow: hidden;
     background-image: url("./bg.jpg");
@@ -21,8 +18,7 @@ body {
 }
 
 header {
-    margin: 0 auto;
-    margin-top: 1.5rem;
+    margin: 1.5rem auto 0;
     font-size: 2rem;
 }
 
@@ -39,8 +35,9 @@ header .title h4{
     text-align: center;
     padding-bottom: 15px;
 }
+
 .container {
-    margin: 0 auto;
+    margin: 2rem auto 0;
     width: 75%;
     text-align: justify;
 }
@@ -137,6 +134,14 @@ footer {
 }
 
 /*combat html*/
+
+i {
+    cursor: pointer;
+}
+
+i:hover {
+    color: rgb(240, 208, 66)
+}
 .monster-pic-combat img{
     height: 12rem;
     width: auto;
@@ -144,12 +149,11 @@ footer {
     padding: 15px;
 }
 
-
 .monsters-info {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 .info {
@@ -221,13 +225,14 @@ progress[value]::-moz-progress-bar {
     height: 300px;
     width: 600px;
     text-align: center;
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 
+/*final_screen*/
 .final-message {
     display: flex;
     flex-direction: column;
-    margin: 20px auto;
+    margin: 1rem auto;
     text-align: center;
     padding: 10px;
 }
@@ -237,6 +242,12 @@ progress[value]::-moz-progress-bar {
     height: auto;
 }
 
+.final-message > .text {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+/*media query*/
 @media screen and (max-width: 420px) {
     body {
         display: flex;
@@ -244,8 +255,18 @@ progress[value]::-moz-progress-bar {
         height: auto;
         overflow: scroll;
     }
+    header {
+        margin-top: 0.5rem;
+    }
+    .title {
+        font-size: 1rem;
+    }
     .text {
         margin-top: 0.5rem;
+    }
+    .container {
+        margin-top: 0.5rem;
+        width: 95%;
     }
     .monsters {
         display: flex;
@@ -262,17 +283,33 @@ progress[value]::-moz-progress-bar {
         margin: 2px 0 10px;
     }
     .monsters-info{
-        /*display: grid*/
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        flex-wrap: wrap;
         align-items: center;
         margin: 0 auto;
         height: auto;
+    }
+    .info {
+        width: 33vw;
+    }
+    .monster-pic-combat img{
+        height: 25vh;
+        margin-left: -25%;
+    }
+    .monster-name-combat {
+        font-size: 1.5rem;
+    }
+    progress {
+        width: 100%
     }
     .log {
         height: 6rem;
         overflow: scroll;
         order: 3;
+    }
+    footer {
+        position: static;
     }
 }
 
@@ -283,10 +320,19 @@ progress[value]::-moz-progress-bar {
         height: auto;
         overflow: scroll;
     }
-    .text {
-        margin-top: 0.5rem;
+    header {
+        margin-top: 0;
     }
-
+    .title {
+        font-size: 1rem;
+    }
+    .text {
+        margin-top: 1rem;
+    }
+    .container {
+        margin-top: 0;
+        width: 100%;
+    }
     .monsters {
         display: flex;
         flex-direction: row;
@@ -299,21 +345,47 @@ progress[value]::-moz-progress-bar {
         width: 33vw;
         margin-left: -5%;
     }
-
     .button {
-        margin: 0.5rem 0 0.5rem;
+        margin: 0;
     }
     .monsters-info{
-        /*display: grid*/
-        display: flex;
-        flex-direction: column;
-        align-items: center;
         margin: 0 auto;
-        height: auto;
+    }
+    .monster-pic-combat img{
+        height: 30vh;
+        padding: 0;
+    }
+    .monster-name-combat{
+        font-size: 1.5em;
+    }
+    .info > div {
+        padding: 0;
     }
     .log {
-        height: 6rem;
+        height: 11rem;
         overflow: scroll;
-        order: 3;
+    }
+    footer {
+        position: static;
+    }
+    .final-message img{
+        height: 30vh;
+        width: auto;
+    }
+}
+
+@media screen and (min-width: 737px) and (max-width: 1024px) {
+    body{
+        display: grid;
+        grid-template-rows: 15% 80% 5%;
+        height: 100vh;
+        overflow: scroll;
+        margin: 0 auto;
+    }
+    header {
+        margin: 0;
+    }
+    .container {
+        width: 100vw;
     }
 }
